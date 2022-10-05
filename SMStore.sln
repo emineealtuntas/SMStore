@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMStore.WebUI", "SMStore.WebUI\SMStore.WebUI.csproj", "{FB580656-A451-4981-84EE-5913BD5DF6F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMStore.WebUI", "SMStore.WebUI\SMStore.WebUI.csproj", "{FB580656-A451-4981-84EE-5913BD5DF6F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMStore.Entities", "SMStore.Entities\SMStore.Entities.csproj", "{A0ECA19E-1414-4EF8-B774-68C26A51E976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMStore.Entities", "SMStore.Entities\SMStore.Entities.csproj", "{A0ECA19E-1414-4EF8-B774-68C26A51E976}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMStore.Data", "SMStore.Data\SMStore.Data.csproj", "{188DEB54-4FAC-476B-B69D-F990AB073326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMStore.Service", "SMStore.Service\SMStore.Service.csproj", "{6EFAEBB4-E20C-4CD8-AF8C-9D4677E447E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{A0ECA19E-1414-4EF8-B774-68C26A51E976}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0ECA19E-1414-4EF8-B774-68C26A51E976}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0ECA19E-1414-4EF8-B774-68C26A51E976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{188DEB54-4FAC-476B-B69D-F990AB073326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{188DEB54-4FAC-476B-B69D-F990AB073326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{188DEB54-4FAC-476B-B69D-F990AB073326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{188DEB54-4FAC-476B-B69D-F990AB073326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EFAEBB4-E20C-4CD8-AF8C-9D4677E447E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EFAEBB4-E20C-4CD8-AF8C-9D4677E447E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EFAEBB4-E20C-4CD8-AF8C-9D4677E447E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EFAEBB4-E20C-4CD8-AF8C-9D4677E447E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

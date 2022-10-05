@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SMStore.Data.Configurations;
 using SMStore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,8 +31,30 @@ namespace SMStore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //FluentAPI : Veritabanı tablo ve kolonlarını oluşturmak için data annotations a alternatif olarak kullanılabilen bir teknoloji
-            modelBuilder.Entity<AppUser>().Property(a => a.Name)
-                .IsRequired().HasColumnType("varchar(50)").HasMaxLength(50);
+            modelBuilder.Entity<AppUser>().Property(a => a.Name).HasColumnType("varchar(50)").HasMaxLength(50);
+            modelBuilder.Entity<AppUser>().Property(a => a.Surname).HasColumnType("varchar(50)").HasMaxLength(50);
+            modelBuilder.Entity<AppUser>().Property(a => a.Email).IsRequired().HasColumnType("varchar(50)").HasMaxLength(50);
+            modelBuilder.Entity<AppUser>().Property(a => a.Phone).HasColumnType("varchar(15)");
+            modelBuilder.Entity<AppUser>().Property(a => a.Username).HasColumnType("varchar(50)");
+            modelBuilder.Entity<AppUser>().Property(a => a.Password).HasColumnType("varchar(50)");
+            //FluentAPI ile Veritabanı oluşturduktan sonra ilk kaydı ekleme
+            modelBuilder.Entity<AppUser>().HasData(
+                new AppUser
+                {
+                    Id = 1,
+                    Email = "admin@smstore.com",
+                    IsActive = true,
+                    IsAdmin = true,
+                    Name = "Admin",
+                    Surname = "User",
+                    Password = "123"
+                }
+                );
+            // Configurations altındaki class ları burada tanımlamamız gerekiyor.
+            modelBuilder.ApplyConfiguration(new BrandConfiguration()); // Configuration class larını bu şekilde tek tek çağırabiliriz.
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); // Configuration class larını bu şekilde topluca da ekleyebiliyoruz.
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
