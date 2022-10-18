@@ -51,7 +51,7 @@ namespace SMStore.Data
                 }
                 );
             // Configurations altındaki class ları burada tanımlamamız gerekiyor.
-            modelBuilder.ApplyConfiguration(new BrandConfiguration()); // Configuration class larını bu şekilde tek tek çağırabiliriz.
+            //modelBuilder.ApplyConfiguration(new BrandConfiguration()); // Configuration class larını bu şekilde tek tek çağırabiliriz.
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); // Configuration class larını bu şekilde topluca da ekleyebiliyoruz.
 
 
