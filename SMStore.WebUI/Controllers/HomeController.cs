@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SMStore.Entities;
+using SMStore.Service.Repositories;
 using SMStore.WebUI.Models;
 using System.Diagnostics;
 
@@ -8,18 +10,63 @@ namespace SMStore.WebUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IRepository<Contact> _repositoryContact;
+
+        private readonly IRepository<Slider> _repositorySlider;
+
+        private readonly IRepository<Product> _repositoryProduct;
+
+
+        public HomeController(ILogger<HomeController> logger, IRepository<Contact> repositoryContact, IRepository<Slider> repositorySlider, IRepository<Product> repositoryProduct)
         {
             _logger = logger;
+            _repositoryContact = repositoryContact;
+            _repositorySlider = repositorySlider;
+            _repositoryProduct = repositoryProduct;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var model = new HomePageViewModel();
+            model.Sliders = await _repositorySlider.GetAllAsync();
+            model.Products = await _repositoryProduct.GetAllAsync(p => p.IsActive && p.IsHome);
+            return View(model);
         }
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        [Route("AccessDenied")]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [Route("İletisim")]
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        [Route("İletisim"), HttpPost]
+        public async Task<IActionResult> ContactUsAsync(Contact contact)
+        {
+            try
+            {
+                await _repositoryContact.AddAsync(contact);
+                var sonuc = await _repositoryContact.SaveChangesAsync();
+                if (sonuc>0)
+                {
+                    TempData["mesaj"] = "<div class = 'alert alert-success'>Mesajınız iletilmiştir...Teşekkür Ederiz...</div>";
+                    return RedirectToAction(nameof(ContactUs));
+                }
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Hata Oluştu!");
+            }
             return View();
         }
 

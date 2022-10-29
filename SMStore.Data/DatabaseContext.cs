@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SMStore.Data.Configurations;
 using SMStore.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMStore.Data
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SMStore.Entities;
@@ -7,7 +8,7 @@ using SMStore.WebUI.Utils;
 
 namespace SMStore.WebUI.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize] //(Policy = "UserPolicy")
     public class CategoriesController : Controller
     {
         private readonly IRepository<Category> _repository;
@@ -18,7 +19,7 @@ namespace SMStore.WebUI.Areas.Admin.Controllers
         }
 
         // GET: CategoriesController
-        public async Task<ActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var model = await _repository.GetAllAsync();
             return View(model);
@@ -96,8 +97,9 @@ namespace SMStore.WebUI.Areas.Admin.Controllers
                 }
 
             }
-            var model = await _repository.FindAsync(id);
+            
             var liste = await _repository.GetAllAsync();
+            ViewBag.ParentId = new SelectList(liste, "Id", "Name");
             return View(entity);
         }
         // GET: CategoriesController/Delete/5
