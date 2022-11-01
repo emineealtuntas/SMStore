@@ -4,6 +4,7 @@ using SMStore.Entities;
 
 namespace SMStore.WebUIAPIUsing.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AppUsersController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -37,58 +38,78 @@ namespace SMStore.WebUIAPIUsing.Areas.Admin.Controllers
         // POST: AppUsersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> CreateAsync(AppUser appUser)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(IndexAsync));
+                try
+                {
+                    var response = await _httpClient.PostAsJsonAsync(_apiAdres, appUser); // _httpClient nesnesi içerisindeki PostAsJsonAsync metodunu kullanarak app inize post isteği gönderiyoruz
+                    if (response.IsSuccessStatusCode) // eğer api den başarılı işlem kodu döndüyse
+                        return RedirectToAction(nameof(Index)); // sayfayı anasayfaya yönlendirir
+                    else ModelState.AddModelError("", "Hata Oluştu!");
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata Oluştu!");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: AppUsersController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(int id)
         {
-            return View();
+            var model = await _httpClient.GetFromJsonAsync<AppUser>(_apiAdres + "/" + id);
+            return View(model);
         }
 
         // POST: AppUsersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int id, AppUser appUser)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(IndexAsync));
+                try
+                {
+                    var response = await _httpClient.PutAsJsonAsync(_apiAdres + "/" + id, appUser); 
+                    if (response.IsSuccessStatusCode) 
+                        return RedirectToAction(nameof(Index)); 
+                    else ModelState.AddModelError("", "Hata Oluştu!");
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata Oluştu!");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: AppUsersController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            return View();
+            var model = await _httpClient.GetFromJsonAsync<AppUser>(_apiAdres + "/" + id);
+            return View(model);
         }
 
         // POST: AppUsersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteAsync(int id, AppUser appUser)
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                var sonuc = await _httpClient.DeleteAsync(_apiAdres + "/" + id);
+                if(sonuc.IsSuccessStatusCode)
+                    return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("", "Kayıt Silinemedi!");
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Hata Oluştu!");
             }
+            return View();
         }
     }
 }
